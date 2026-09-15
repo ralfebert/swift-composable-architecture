@@ -67,8 +67,14 @@ let package = Package(
         .product(name: "IssueReporting", package: "swift-issue-reporting"),
         .product(name: "OrderedCollections", package: "swift-collections"),
         .product(name: "Perception", package: "swift-perception"),
+        // PerceptionCore is a shared target (Perception and Sharing both use it), so Xcode builds
+        // it as its own framework — link it here, or the symbols this module uses through
+        // Perception's re-export are undefined at link time.
+        .product(name: "PerceptionCore", package: "swift-perception"),
         .product(name: "Sharing", package: "swift-sharing"),
         .product(name: "SwiftUINavigation", package: "swift-navigation"),
+        // Same reason: SwiftNavigation is shared by SwiftUINavigation and UIKitNavigation.
+        .product(name: "SwiftNavigation", package: "swift-navigation"),
         .product(name: "UIKitNavigation", package: "swift-navigation"),
       ],
       resources: [
